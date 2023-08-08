@@ -118,3 +118,11 @@ GuiLibrary.MakeButton({
             end)
 	end,
 })
+
+GuiLibrary.MakeButton({
+	["Name"] = "512xPack",
+	["Window"] = "Visuals",
+	["Function"] = function()
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/tatibird/Elysianprivate/main/512xPack"))()
+				end,
+})
