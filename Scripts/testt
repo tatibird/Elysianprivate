@@ -10,3 +10,33 @@ if v == true then
  
 	end,
 })
+
+GuiLibrary.MakeButton({
+	["Name"] = "speed",
+	["Window"] = "Combat",
+	["Function"] = function(v)
+local highjumpval = v
+            if highjumpval then
+                LocalPlayer.Character.Humanoid:ChangeState("Jumping")
+                task.wait()
+                workspace.Gravity = 5
+                spawn(function()
+                    for i = 1, highjumpforce["Value"] do
+                        wait()
+                        if (not highjumpval) then return end
+                        LocalPlayer.Character.Humanoid:ChangeState("Jumping")
+                    end
+                end)
+                spawn(function()
+                    for i = 1, highjumpforce["Value"] / 28 do
+                        task.wait(0.1)
+                        LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Freefall)
+                        task.wait(0.1)
+                        LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+                    end
+                end)
+                highjump:silentToggle()
+            else
+                workspace.Gravity = 196.19999694824
+                return
+            end
