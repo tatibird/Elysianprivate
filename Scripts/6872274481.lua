@@ -75,3 +75,24 @@ GuiLibrary.MakeButton({
                     loadstring(game:HttpGet("https://raw.githubusercontent.com/tatibird/Elysian/main/Texture%20packs"))()
 	end,
 })
+
+GuiLibrary.MakeButton({
+	["Name"] = "Sprint",
+	["Window"] = "Utility",
+	["Function"] = function()
+        sprint = v
+        if sprint then
+            spawn(function()
+                repeat
+                    wait()
+                    if (not sprint) then return end
+                    if BedwarsRemotes.SprintController.sprinting == false then
+                        BedwarsRemotes.SprintController:startSprinting()
+                    end
+                until (not sprint)
+            end)
+        else
+            BedwarsRemotes.SprintController:stopSprinting()
+        end
+    end
+})
