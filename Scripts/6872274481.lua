@@ -8,8 +8,8 @@ local Character = LocalPlayer.Character
 
 local KnitClient = debug.getupvalue(require(LocalPlayer.PlayerScripts.TS.knit).setup, 6)
 
-local SwordCont = require(LocalPlayer.PlayerScripts.TS.controllers.global.combat.sword["sword-controller"]).SwordController
-local sprintthingy = require(LocalPlayer.PlayerScripts.TS.controllers.global.sprint["sprint-controller"]).SprintController
+local SwordController = require(LocalPlayer.PlayerScripts.TS.controllers.global.combat.sword["sword-controller"]).SwordController
+local SprintController = require(LocalPlayer.PlayerScripts.TS.controllers.global.sprint["sprint-controller"]).SprintController
 local kbtable = debug.getupvalue(require(game:GetService("ReplicatedStorage").TS.damage["knockback-util"]).KnockbackUtil.calculateKnockbackVelocity, 1)
 local InventoryUtil = require(ReplicatedStorage.TS.inventory["inventory-util"]).InventoryUtil
 local itemtablefunc = require(ReplicatedStorage.TS.item["item-meta"]).getItemMeta
@@ -58,7 +58,7 @@ GuiLibrary.MakeButton({
                                 if mag <= Distance.Value and v.Team ~= game.Players.LocalPlayer.Team and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health > 0 then
                                     task.wait(1/AttackSpeed["Value"])
                                     if getEquipped()["Type"] == "sword" then 
-                                    SwordCont:swingSwordAtMouse()
+                                    SwordController:swingSwordAtMouse()
                                     end
                                 end
                             end
@@ -86,13 +86,13 @@ GuiLibrary.MakeButton({
                 repeat
                     wait()
                     if (not sprint) then return end
-                    if BedwarsRemotes.SprintController.sprinting == false then
-                        BedwarsRemotes.SprintController:startSprinting()
+                    if SprintController.sprinting == false then
+                	SprintController:startSprinting()
                     end
                 until (not sprint)
             end)
         else
-            BedwarsRemotes.SprintController:stopSprinting()
+            SprintController:stopSprinting()
         end
     end
 })
