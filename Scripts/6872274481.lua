@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 local GuiLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/tatibird/Elysianprivate/main/gui.library", true))()
 local entity = loadstring(game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/Libraries/entityHandler.lua", true))()
 
@@ -69,7 +68,6 @@ GuiLibrary.MakeButton({
             end
 	end,
 })
-=======
 GuiLibrary.MakeButton({
 	["Name"] = "Texture Pack",
 	["Window"] = "Visual",
@@ -77,5 +75,3 @@ GuiLibrary.MakeButton({
                     loadstring(game:HttpGet("https://raw.githubusercontent.com/tatibird/Elysian/main/Texture%20packs"))()
 	end,
 })
-
->>>>>>> aaa5b26a398fc8fb0820a46ae423ea980c2ab726
