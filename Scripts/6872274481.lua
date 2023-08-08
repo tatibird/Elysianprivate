@@ -1,8 +1,9 @@
 local GuiLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/tatibird/Elysianprivate/main/gui.library", true))()
 local entity = loadstring(game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/Libraries/entityHandler.lua", true))()
 
-local Players = game.Players
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local UserInputService = game:GetService("UserInputService")
+local Players = game.Players
 local LocalPlayer = Players.LocalPlayer
 local Character = LocalPlayer.Character
 
@@ -95,4 +96,25 @@ GuiLibrary.MakeButton({
             SprintController:stopSprinting()
         end
     end
+})
+
+GuiLibrary.MakeButton({
+	["Name"] = "Velocity",
+	["Window"] = "Combat",
+	["Function"] = function()
+        getgenv().veloval = v
+            spawn(function()
+                if getgenv().veloval then
+                    if not Humanoid then return end
+                    if Humanoid then
+                        kbtable["kbDirectionStrength"] = 0
+                        kbtable["kbUpwardStrength"] = 0
+                    end
+                else
+                    kbtable["kbDirectionStrength"] = 100
+                    kbtable["kbUpwardStrength"] = 100
+                    return
+                end
+            end)
+	end,
 })
