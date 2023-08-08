@@ -27,6 +27,7 @@ local itemmeta = require(ReplicatedStorage.TS.item["item-meta"])
 local itemstuff = debug.getupvalue(require(ReplicatedStorage.TS.item["item-meta"]).getItemMeta, 1)
 local itemtab = debug.getupvalue(require(game:GetService("ReplicatedStorage").TS.item["item-meta"]).getItemMeta, 1)
 local CombatConstant = require(game:GetService("ReplicatedStorage").TS.combat["combat-constant"]).CombatConstant
+local ShopItems = debug.getupvalue(debug.getupvalue(require(replicatedStorageService.TS.games.bedwars.shop["bedwars-shop"]).BedwarsShop.getShopItem, 1), 2),
 
 
 local function getEquipped()
@@ -219,7 +220,7 @@ end
 
 GuiLibrary.MakeButton({
     ["Name"] = "Fly",
-    ["Window"] = "Utility",
+    ["Window"] = "Movement",
     ["Function"] = function(v)
         flyenabled = v
         if flyenabled then
@@ -380,3 +381,46 @@ game:GetService("CoreGui"):FindFirstChild("MatchA_StateB").Enabled = false
 end
 end
 })
+
+do
+local tiered = {}
+local nexttier = {}
+
+for i,v in pairs(bedwars.ShopItems) do
+	if type(v) == "table" then 
+		if v.tiered then
+			tiered[v.itemType] = v.tiered
+		end
+		if v.nextTier then
+			nexttier[v.itemType] = v.nextTier
+		end
+	end
+end
+
+GuiLibrary.MakeButton({
+    ["Name"] = "ShopTierBypass",
+    ["Window"] = "Utility",
+    ["Function"] = function(v) 
+        if v then
+		for i,v in pairs(ShopItems) do
+			if type(v) == "table" then 
+				v.tiered = nil
+				v.nextTier = nil
+			end
+		end
+	else
+	for i,v in pairs(ShopItems) do
+		if type(v) == "table" then 
+			if tiered[v.itemType] then
+				v.tiered = tiered[v.itemType]
+			end
+			if nexttier[v.itemType] then
+				v.nextTier = nexttier[v.itemType]
+			end
+		end
+	end
+ end
+
+    end
+})
+end
