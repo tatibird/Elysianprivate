@@ -236,6 +236,7 @@ GuiLibrary.MakeButton({
     end,
 })
 
+local testtogttt = {Value = 20}
 GuiLibrary.MakeButton({
     ["Name"] = "AutoClicker",
     ["Window"] = "Combat",
