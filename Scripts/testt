@@ -48,3 +48,68 @@ GuiLibrary.MakeButton({
             end
        end
 })
+
+local flygravityb = {Value = 0}
+local flyspeedb = {Value = 23}
+local FlyStudTP = {Value = 5}
+local flyenabled = false
+
+local function flyLogic()
+    if not flyenabled then
+        return
+    end
+    
+    local player = LocalPlayer
+    local character = player.Character
+    if not character then
+        return
+    end
+    
+    local humanoid = character:FindFirstChild("Humanoid")
+    if not humanoid or humanoid.Health == 0 then
+        return
+    end
+    
+    local HumanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+    if not HumanoidRootPart then
+        return
+    end
+    
+    workspace.Gravity = flygravityb.Value
+    humanoid.WalkSpeed = flyspeedb.Value
+    
+    local UserInputService = game:GetService("UserInputService")
+    local SpaceHeld = UserInputService:IsKeyDown(Enum.KeyCode.Space)
+    local ShiftHeld = UserInputService:IsKeyDown(Enum.KeyCode.LeftShift)
+    
+    if SpaceHeld then
+        HumanoidRootPart.CFrame = HumanoidRootPart.CFrame * CFrame.new(0, FlyStudTP.Value, 0)
+    end
+    
+    if ShiftHeld then
+        HumanoidRootPart.CFrame = HumanoidRootPart.CFrame * CFrame.new(0, -FlyStudTP.Value, 0)
+    end
+end
+
+GuiLibrary.MakeButton({
+    ["Name"] = "Fly",
+    ["Window"] = "Combat",
+    ["Function"] = function(v)
+        flyenabled = v
+        if flyenabled then
+            spawn(function()
+                while flyenabled do
+                    flyLogic()
+                    wait()
+                end
+            end)
+        else
+            local player = game.Players.LocalPlayer
+            if player.Character then
+                player.Character.Humanoid.WalkSpeed = flyspeedb.Value
+            end
+            workspace.Gravity = 196
+        end
+ 
+    end,
+})
