@@ -235,3 +235,70 @@ GuiLibrary.MakeButton({
  
     end,
 })
+
+GuiLibrary.MakeButton({
+    ["Name"] = "AutoClicker",
+    ["Window"] = "Combat",
+    ["Function"] = function(v) 
+        if v then
+            local holding = false
+            ACC1 = UserInputService.InputBegan:connect(function(input, gameProcessed)
+                if gameProcessed and input.UserInputType == Enum.UserInputType.MouseButton1 then
+                    holding = true
+                end
+            end)
+            ACC2 = UserInputService.InputEnded:connect(function(input)
+                if input.UserInputType == Enum.UserInputType.MouseButton1 then
+                    holding = false
+                end
+            end)
+            spawn(function()
+                repeat
+                    task.wait(1/testtogttt["Value"])
+                    if holding then
+                        if holding == false then return end
+                        if getEquipped()["Type"] == "sword" then 
+                            if holding == false then return end
+                            SwordCont:swingSwordAtMouse()
+                        end
+                    end
+                until (not v)
+            end)
+        else
+            ACC1:Disconnect()
+            ACC2:Disconnect()
+            return
+        end
+    end
+})
+
+GuiLibrary.MakeButton({
+    ["Name"] = "NoClickDelay",
+    ["Window"] = "Combat",
+    ["Function"] = function(v) 
+        spawn(function()
+            if v and entity.isAlive then
+                for i2,v2 in pairs(itemtable) do
+                    if type(v2) == "table" and rawget(v2, "sword") then
+                        v2.sword.attackSpeed = 0.000000001
+                    end
+                    SwordCont.isClickingTooFast = function() return false end
+                end
+            else
+            end
+        end)
+    end
+})
+
+GuiLibrary.MakeButton({
+    ["Name"] = "Reach",
+    ["Window"] = "Combat",
+    ["Function"] = function(v) 
+        if v then
+            CombatConstant.RAYCAST_SWORD_CHARACTER_DISTANCE = reachvalue["Value"]
+        else
+            CombatConstant.RAYCAST_SWORD_CHARACTER_DISTANCE = 14.4
+        end
+
+    end
+})
