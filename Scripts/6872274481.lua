@@ -293,6 +293,7 @@ GuiLibrary.MakeButton({
     end
 })
 
+local reachvalue = {Value = 18}
 GuiLibrary.MakeButton({
     ["Name"] = "Reach",
     ["Window"] = "Combat",
