@@ -46,32 +46,33 @@ local function getEquipped()
     return {["Object"] = obj, ["Type"] = typetext}
 end
 
-local Distance = {Value = 10}
-local AttackSpeed = {Value = 15}
+local Distance = {Value = 15}
+local AttackSpeed = {Value = 18}
 GuiLibrary.MakeButton({
 	["Name"] = "KillAura",
 	["Window"] = "Combat",
 	["Function"] = function(v)
          if v then
-                spawn(function()
-                    repeat
-                        for i,v in pairs(game.Players:GetChildren()) do
-                            wait(0.01)
-                            if v.Character and v.Name ~= game.Players.LocalPlayer.Name and v.Character:FindFirstChild("HumanoidRootPart") then
-                                local mag = (v.Character.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-                                if mag <= Distance.Value and v.Team ~= game.Players.LocalPlayer.Team and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health > 0 then
-                                    task.wait(1/AttackSpeed["Value"])
-                                    if getEquipped()["Type"] == "sword" then 
+            spawn(function()
+                repeat
+                    for i,v in pairs(game.Players:GetChildren()) do
+                        wait(0.01)
+                        if v.Character and v.Name ~= LocalPlayer.Name and v.Character:FindFirstChild("HumanoidRootPart") then
+                            local mag = (v.Character.HumanoidRootPart.Position - Character.HumanoidRootPart.Position).Magnitude
+                            if mag <= Distance.Value and v.Team ~= LocalPlayer.Team and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health > 0 then
+                                task.wait(1/AttackSpeed.Value)
+                                --if getEquipped()["Type"] == "sword" then 
                                     SwordController:swingSwordAtMouse()
-                                    end
-                                end
+                                --end
                             end
-                        end                    
-                    until (not v)
-                end)
-            end
+                        end
+                    end                    
+                until (not v)
+            end)
+        end
 	end,
 })
+
 GuiLibrary.MakeButton({
 	["Name"] = "Texture Pack",
 	["Window"] = "Visuals",
