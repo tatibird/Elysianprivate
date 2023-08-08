@@ -79,8 +79,8 @@ GuiLibrary.MakeButton({
 
 GuiLibrary.MakeButton({
 	["Name"] = "Sprint",
-	["Window"] = "Utility",
-	["Function"] = function()
+	["Window"] = "Movement",
+	["Function"] = function(v)
         sprint = v
         if sprint then
             spawn(function()
