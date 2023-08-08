@@ -307,3 +307,74 @@ GuiLibrary.MakeButton({
 
     end
 })
+
+GuiLibrary.MakeButton({
+	["Name"] = "Stats Info",
+	["Window"] = "Visuals",
+	["Function"] = function(v)
+if v == true then
+	a = game:GetService("CoreGui"):FindFirstChild("MatchA_StateB")
+   if a then
+	  a.Enabled = true
+   else
+
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local Frame_2 = Instance.new("Frame")
+local TextLabel = Instance.new("TextLabel")
+local Kills = Instance.new("TextLabel")
+
+
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(36, 36, 36)
+Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Frame.BorderSizePixel = 0
+Frame.Position = UDim2.new(0.132478639, 0, 0.359183669, 0)
+Frame.Size = UDim2.new(0, 186, 0, 85)
+
+Frame_2.Parent = Frame
+Frame_2.BackgroundColor3 = Color3.fromRGB(170, 0, 255)
+Frame_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Frame_2.BorderSizePixel = 0
+Frame_2.Position = UDim2.new(-0.00160832563, 0, 0.225570142, 0)
+Frame_2.Size = UDim2.new(0, 186, 0, 1)
+
+TextLabel.Parent = Frame
+TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.BackgroundTransparency = 1.000
+TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel.BorderSizePixel = 0
+TextLabel.Position = UDim2.new(-0.022332469, 0, -0.0172869507, 0)
+TextLabel.Size = UDim2.new(0, 193, 0, 20)
+TextLabel.Font = Enum.Font.FredokaOne
+TextLabel.Text = "Elysian"
+TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.TextSize = 14.000
+
+Kills.Name = "Kills"
+Kills.Parent = Frame
+Kills.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Kills.BackgroundTransparency = 1.000
+Kills.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Kills.BorderSizePixel = 0
+Kills.Position = UDim2.new(-0.416643709, 0, 0.235294119, 0)
+Kills.Size = UDim2.new(0, 186, 0, 20)
+Kills.Font = Enum.Font.FredokaOne
+Kills.Text = "Kills:"
+Kills.TextColor3 = Color3.fromRGB(255, 255, 255)
+Kills.TextSize = 14.000
+
+while wait(StatsUpdateDelay["Value"]) do
+	Kills_label.Text = "Kills: ".. stats.Kills.Value
+	Bed_label.Text = "Bed: ".. stats.Bed.Value
+	Skulls_label.Text = "Skulls: ".. stats.Skulls.Value
+end
+
+end
+else
+game:GetService("CoreGui"):FindFirstChild("MatchA_StateB").Enabled = false
+end
+end
+})
