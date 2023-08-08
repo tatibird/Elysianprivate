@@ -1,23 +1,27 @@
 local GuiLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/tatibird/Elysianprivate/main/gui.library", true))()
 
+local LocalPlayer = game.Players.LocalPlayer
+
+local Speedeb = {Value = 23}
 GuiLibrary.MakeButton({
-	["Name"] = "speed",
+	["Name"] = "Speed",
 	["Window"] = "Combat",
 	["Function"] = function(v)
-if v == true then
-             game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Speedeb["Value"]
+		if v == true then
+             LocalPlayer.Character.Humanoid.WalkSpeed = Speedeb["Value"]
         else
-             game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
+             LocalPlayer.Character.Humanoid.WalkSpeed = 16
         end
  
 	end,
 })
 
+local highjumpforce = {Value = 25}
 GuiLibrary.MakeButton({
-	["Name"] = "speed",
+	["Name"] = "HighJump",
 	["Window"] = "Combat",
 	["Function"] = function(v)
-local highjumpval = v
+		local highjumpval = v
             if highjumpval then
                 LocalPlayer.Character.Humanoid:ChangeState("Jumping")
                 task.wait()
@@ -42,3 +46,5 @@ local highjumpval = v
                 workspace.Gravity = 196.19999694824
                 return
             end
+       end
+})
