@@ -25,6 +25,8 @@ local clntstorehandlr = require(LocalPlayer.PlayerScripts.TS.ui.store).ClientSto
 local matchState = clntstorehandlr:getState().Game.matchState
 local itemmeta = require(ReplicatedStorage.TS.item["item-meta"])
 local itemstuff = debug.getupvalue(require(ReplicatedStorage.TS.item["item-meta"]).getItemMeta, 1)
+local itemtab = debug.getupvalue(require(game:GetService("ReplicatedStorage").TS.item["item-meta"]).getItemMeta, 1)
+local CombatConstant = require(game:GetService("ReplicatedStorage").TS.combat["combat-constant"]).CombatConstant
 
 
 local function getEquipped()
