@@ -5,7 +5,7 @@ local LocalPlayer = game.Players.LocalPlayer
 local Speedeb = {Value = 23}
 GuiLibrary.MakeButton({
 	["Name"] = "Speed",
-	["Window"] = "Combat",
+	["Window"] = "Movement",
 	["Function"] = function(v)
 		if v == true then
              LocalPlayer.Character.Humanoid.WalkSpeed = Speedeb["Value"]
@@ -19,7 +19,7 @@ GuiLibrary.MakeButton({
 local highjumpforce = {Value = 25}
 GuiLibrary.MakeButton({
 	["Name"] = "HighJump",
-	["Window"] = "Combat",
+	["Window"] = "Utility",
 	["Function"] = function(v)
 		local highjumpval = v
             if highjumpval then
@@ -92,7 +92,7 @@ end
 
 GuiLibrary.MakeButton({
     ["Name"] = "Fly",
-    ["Window"] = "Combat",
+    ["Window"] = "Utility",
     ["Function"] = function(v)
         flyenabled = v
         if flyenabled then
