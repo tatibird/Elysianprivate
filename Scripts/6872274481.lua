@@ -126,3 +126,17 @@ GuiLibrary.MakeButton({
 			loadstring(game:HttpGet("https://raw.githubusercontent.com/tatibird/Elysianprivate/main/512xPack"))()
 				end,
 })
+
+local Speedeb = {Value = 23}
+GuiLibrary.MakeButton({
+	["Name"] = "Speed",
+	["Window"] = "Movement",
+	["Function"] = function(v)
+		if v == true then
+             LocalPlayer.Character.Humanoid.WalkSpeed = Speedeb["Value"]
+        else
+             LocalPlayer.Character.Humanoid.WalkSpeed = 16
+        end
+ 
+	end,
+})
