@@ -1,1 +1,12 @@
-hi
+GuiLibrary.MakeButton({
+	["Name"] = "speed",
+	["Window"] = "Combat",
+	["Function"] = function(v)
+if v == true then
+             game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Speedeb["Value"]
+        else
+             game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
+        end
+ 
+	end,
+})
