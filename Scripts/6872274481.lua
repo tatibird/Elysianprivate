@@ -7,7 +7,6 @@ local Players = game.Players
 local LocalPlayer = Players.LocalPlayer
 local Character = LocalPlayer.Character
 local Humanoid = Character.Humanoid
-local Leaderstats = localPlayer.leaderstats
 
 local KnitClient = debug.getupvalue(require(LocalPlayer.PlayerScripts.TS.knit).setup, 6)
 
@@ -309,7 +308,7 @@ GuiLibrary.MakeButton({
     end
 })
 
-local stats = Leaderstats
+local stats = LocalPlayer.leaderstats
 local StatsUpdateDelay = {Value = 0.5}
 GuiLibrary.MakeButton({
 	["Name"] = "Stats Info",
