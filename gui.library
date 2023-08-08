@@ -650,10 +650,11 @@ GuiLibrary.MakeWindow({["Name"]="Visuals"})
 GuiLibrary.MakeWindow({["Name"]="Utility"})
 GuiLibrary.MakeWindow({["Name"]="Scripts"})
 
-testButton.NewToggle({
-	["Name"] = "Kill aura",
-	["Function"] = function(v)
-		print(v)
+GuiLibrary.MakeButton({
+	["Name"] = "TestButton2",
+	["Window"] = "Combat",
+	["Function"] = function()
+
 	end,
 })
 
