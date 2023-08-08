@@ -59,8 +59,7 @@ local function flyLogic()
         return
     end
     
-    local player = LocalPlayer
-    local character = player.Character
+    local character = LocalPlayer.Character
     if not character then
         return
     end
@@ -104,9 +103,8 @@ GuiLibrary.MakeButton({
                 end
             end)
         else
-            local player = game.Players.LocalPlayer
-            if player.Character then
-                player.Character.Humanoid.WalkSpeed = flyspeedb.Value
+            if LocalPlayer.Character then
+                LocalPlayer.Character.Humanoid.WalkSpeed = flyspeedb.Value
             end
             workspace.Gravity = 196
         end
