@@ -650,13 +650,6 @@ GuiLibrary.MakeWindow({["Name"]="Visuals"})
 GuiLibrary.MakeWindow({["Name"]="Utility"})
 GuiLibrary.MakeWindow({["Name"]="Scripts"})
 
-GuiLibrary.MakeButton({
-	["Name"] = "TestButton2",
-	["Window"] = "Combat",
-	["Function"] = function()
-
-	end,
-})
 
 GuiLibrary.SendNotification("Moon Loaded!",10)
 return GuiLibrary
