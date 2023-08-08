@@ -1,3 +1,5 @@
+local GuiLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/tatibird/Elysianprivate/main/gui.library", true))()
+
 GuiLibrary.MakeButton({
 	["Name"] = "speed",
 	["Window"] = "Combat",
