@@ -148,6 +148,7 @@ GuiLibrary.MakeButton({
 })
 
 local highjumpforce = {Value = 25}
+local highjumpgravity = {Value = 5}
 GuiLibrary.MakeButton({
 	["Name"] = "HighJump",
 	["Window"] = "Utility",
@@ -156,7 +157,7 @@ GuiLibrary.MakeButton({
             if highjumpval then
                 LocalPlayer.Character.Humanoid:ChangeState("Jumping")
                 task.wait()
-                workspace.Gravity = 5
+                workspace.Gravity = highjumpgravity.Value
                 spawn(function()
                     for i = 1, highjumpforce["Value"] do
                         wait()
