@@ -1,6 +1,8 @@
 local GuiLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/tatibird/Elysianprivate/main/gui.library", true))()
 
 local LocalPlayer = game.Players.LocalPlayer
+local Character = LocalPlayer.Character
+local Humanoid = Character.Humanoid
 
 local Speedeb = {Value = 23}
 GuiLibrary.MakeButton({
@@ -8,9 +10,9 @@ GuiLibrary.MakeButton({
 	["Window"] = "Movement",
 	["Function"] = function(v)
 		if v == true then
-             LocalPlayer.Character.Humanoid.WalkSpeed = Speedeb["Value"]
+             Humanoid.WalkSpeed = Speedeb["Value"]
         else
-             LocalPlayer.Character.Humanoid.WalkSpeed = 16
+             Humanoid.WalkSpeed = 16
         end
  
 	end,
@@ -23,22 +25,22 @@ GuiLibrary.MakeButton({
 	["Function"] = function(v)
 		local highjumpval = v
             if highjumpval then
-                LocalPlayer.Character.Humanoid:ChangeState("Jumping")
+                Humanoid:ChangeState("Jumping")
                 task.wait()
                 workspace.Gravity = 5
                 spawn(function()
                     for i = 1, highjumpforce["Value"] do
                         wait()
                         if (not highjumpval) then return end
-                        LocalPlayer.Character.Humanoid:ChangeState("Jumping")
+                        Humanoid:ChangeState("Jumping")
                     end
                 end)
                 spawn(function()
                     for i = 1, highjumpforce["Value"] / 28 do
                         task.wait(0.1)
-                        LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Freefall)
+                        Humanoid:ChangeState(Enum.HumanoidStateType.Freefall)
                         task.wait(0.1)
-                        LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+                        Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
                     end
                 end)
                 highjump:silentToggle()
@@ -58,14 +60,14 @@ local function flyLogic()
     if not flyenabled then
         return
     end
-    
-    local character = LocalPlayer.Character
-    if not character then
+
+	local Character = LocalPlayer.Character
+    if not Character then
         return
     end
     
-    local humanoid = character:FindFirstChild("Humanoid")
-    if not humanoid or humanoid.Health == 0 then
+    local Humanoid = Character:FindFirstChild("Humanoid")
+    if not Humanoid or Humanoid.Health == 0 then
         return
     end
     
@@ -75,7 +77,7 @@ local function flyLogic()
     end
     
     workspace.Gravity = flygravityb.Value
-    humanoid.WalkSpeed = flyspeedb.Value
+    Humanoid.WalkSpeed = flyspeedb.Value
     
     local UserInputService = game:GetService("UserInputService")
     local SpaceHeld = UserInputService:IsKeyDown(Enum.KeyCode.Space)
@@ -104,7 +106,7 @@ GuiLibrary.MakeButton({
             end)
         else
             if LocalPlayer.Character then
-                LocalPlayer.Character.Humanoid.WalkSpeed = flyspeedb.Value
+                Humanoid.WalkSpeed = flyspeedb.Value
             end
             workspace.Gravity = 196
         end
