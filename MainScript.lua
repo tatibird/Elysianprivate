@@ -11,5 +11,5 @@ end)
 if game.PlaceId == 6872274481 or game.PlaceId == 8560631822 or game.PlaceId == 8444591321 then
     loadstring(game:HttpGet("https://raw.githubusercontent.com/tatibird/Elysianprivate/main/Scripts/6872274481.lua"))()
 else
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/tatibird/Elysianprivate/main/Scripts/AnyGame.lua"))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/tatibird/Elysianprivate/main/Scripts/Universal.lua"))()
 end
