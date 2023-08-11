@@ -441,16 +441,16 @@ GuiLibrary.MakeButton({
             TextLabel_4.Size = UDim2.new(0, 186, 0, 12)
             TextLabel_4.Font = Enum.Font.GothamMedium
             TextLabel_4.Text = "PLAYERS KILLED"
-            TextLab 
+           --TextLab 
 							highlight.FillColor = Color3.fromHSV(viewmodelchamsfillcolor.Hue,viewmodelchamsfillcolor.Sat,viewmodelchamsfillcolor.Val)
 							highlight.FillTransparency = viewmodelchamsfilltransparency.Value
 							highlight.Name = "ItemOutline"
 							highlight.OutlineColor = Color3.fromHSV(viewmodelchamsoutlinecolor.Hue,viewmodelchamsoutlinecolor.Sat,viewmodelchamsoutlinecolor.Val)
 							highlight.OutlineTransparency = viewmodelchamsoutlinetransparency.Value
 							highlight.Adornee = v2
-						end
-					end
-				end
+						--end
+					--end
+				--end
 				hihi = workspace.Camera:WaitForChild("Viewmodel").ChildAdded:Connect(function(child)
 					for i,v in pairs(game.ReplicatedStorage.Items:GetDescendants()) do
 						if v.Name == child.Name then
