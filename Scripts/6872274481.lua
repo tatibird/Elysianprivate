@@ -316,73 +316,167 @@ local StatsUpdateDelay = {Value = 0.5}
 GuiLibrary.MakeButton({
 	["Name"] = "Stats Info",
 	["Window"] = "Visuals",
-	["Function"] = function(v)
-		if v == true then
-			a = game:GetService("CoreGui"):FindFirstChild("MatchA_StateB")
-				if a then
-					a.Enabled = true
-				else
-					local ScreenGui = Instance.new("ScreenGui")
-					local Frame = Instance.new("Frame")
-					local Frame_2 = Instance.new("Frame")
-					local TextLabel = Instance.new("TextLabel")
-					local Kills = Instance.new("TextLabel")
-					
-					
-					ScreenGui.Name = "MatchA_StateB"
-					ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-					
-					Frame.Parent = ScreenGui
-					Frame.BackgroundColor3 = Color3.fromRGB(36, 36, 36)
-					Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
-					Frame.BorderSizePixel = 0
-					Frame.Position = UDim2.new(0.132478639, 0, 0.359183669, 0)
-					Frame.Size = UDim2.new(0, 186, 0, 85)
-					
-					Frame_2.Parent = Frame
-					Frame_2.BackgroundColor3 = Color3.fromRGB(170, 0, 255)
-					Frame_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
-					Frame_2.BorderSizePixel = 0
-					Frame_2.Position = UDim2.new(-0.00160832563, 0, 0.225570142, 0)
-					Frame_2.Size = UDim2.new(0, 186, 0, 1)
-					
-					TextLabel.Parent = Frame
-					TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-					TextLabel.BackgroundTransparency = 1.000
-					TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
-					TextLabel.BorderSizePixel = 0
-					TextLabel.Position = UDim2.new(-0.022332469, 0, -0.0172869507, 0)
-					TextLabel.Size = UDim2.new(0, 193, 0, 20)
-					TextLabel.Font = Enum.Font.FredokaOne
-					TextLabel.Text = "Elysian"
-					TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-					TextLabel.TextSize = 14.000
-					
-					Kills.Name = "Kills"
-					Kills.Parent = Frame
-					Kills.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-					Kills.BackgroundTransparency = 1.000
-					Kills.BorderColor3 = Color3.fromRGB(0, 0, 0)
-					Kills.BorderSizePixel = 0
-					Kills.Position = UDim2.new(-0.416643709, 0, 0.235294119, 0)
-					Kills.Size = UDim2.new(0, 186, 0, 20)
-					Kills.Font = Enum.Font.FredokaOne
-					Kills.Text = "Kills: nil"
-					Kills.TextColor3 = Color3.fromRGB(255, 255, 255)
-					Kills.TextSize = 14.000
-					
-					while wait(0.1) do
-					Kills.Text = "Kills: ".. stats.Kills.Value
-					--[[Bed_label.Text = "Bed: ".. stats.Bed.Value
-					Skulls_label.Text = "Skulls: ".. stats.Skulls.Value]]
+	["Function"] = function(callback)
+        if callback then
+            if not game:GetService("ReplicatedStorage"):FindFirstChild("deatham") then
+                local deaths = Instance.new("NumberValue", game:GetService("ReplicatedStorage"))
+                deaths.Value = 0
+                deaths.Name = "deatham"
+            end
+            spawn(function()
+                local canadd = true
+                repeat 
+                    task.wait()
+                    if game:GetService("Players").LocalPlayer.Character then
+                        if game:GetService("Players").LocalPlayer.Character:GetAttribute("Health") then
+                            if game:GetService("Players").LocalPlayer.Character:GetAttribute("Health") == 0 and canadd then
+                                game:GetService("ReplicatedStorage"):FindFirstChild("deatham").Value += 1
+                                canadd = false
+                            elseif game:GetService("Players").LocalPlayer.Character:GetAttribute("Health") ~= 0 then
+                                canadd = true
+                            end
+                        end
+                    end
+                until not callback
+            end)        
+            game:GetService("Players").LocalPlayer.PlayerGui.TopBarAppGui.TopBarApp["2"].Visible = false
+            ScreenGui2 = Instance.new("ScreenGui")
+            local Frame = Instance.new("Frame")
+            local UICorner = Instance.new("UICorner")
+            local TextLabel = Instance.new("TextLabel")
+            local ImageLabel = Instance.new("ImageLabel")
+            local blur = Instance.new("Frame")
+            local Frame_2 = Instance.new("Frame")
+            local UICorner_2 = Instance.new("UICorner")
+            local TextLabel_2 = Instance.new("TextLabel")
+            local TextLabel_3 = Instance.new("TextLabel")
+            local TextLabel_4 = Instance.new("TextLabel")
+            local Frame_3 = Instance.new("Frame")
+            local UICorner_3 = Instance.new("UICorner")
+            local Frame_4 = Instance.new("Frame")
+            local UICorner_4 = Instance.new("UICorner")
+            local TextLabel_5 = Instance.new("TextLabel")
+            local TextLabel_6 = Instance.new("TextLabel")
+            local blur_2 = Instance.new("Frame")
+                    
+            ScreenGui2.Parent = game:GetService("CoreGui")
+            ScreenGui2.ResetOnSpawn = false
+            
+            Frame.Parent = ScreenGui2
+            Frame.BackgroundColor3 = Color3.fromRGB(22, 22, 22)
+            Frame.BackgroundTransparency = 0.200
+            -- Frame.Position = UDim2.new(0.00792682916, 0, 0.0160493832, 0)
+            Frame.Position = UDim2.new(0.00792682916, 0, 0.3, 0)
+            Frame.Size = UDim2.new(0, 256, 0, 45)
+            
+            UICorner.Parent = Frame
+            
+            TextLabel.Parent = Frame
+            TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+            TextLabel.BackgroundTransparency = 1.000
+            TextLabel.Position = UDim2.new(0.19921875, 0, 0.355555564, 0)
+            TextLabel.Size = UDim2.new(0, 139, 0, 13)
+            TextLabel.Font = Enum.Font.GothamBlack
+            TextLabel.Text = "Elysian"
+            TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+            TextLabel.TextScaled = true
+            TextLabel.TextSize = 14.000
+            TextLabel.TextWrapped = true
+            TextLabel.TextXAlignment = Enum.TextXAlignment.Left
+            
+            ImageLabel.Parent = Frame
+            ImageLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+            ImageLabel.BackgroundTransparency = 1.000
+            ImageLabel.Position = UDim2.new(0.0625, 0, 0.266666681, 0)
+            ImageLabel.Size = UDim2.new(0, 20, 0, 20)
+            ImageLabel.Image = "rbxassetid://14314898887"
+            
+            blur.Name = "blur"
+            blur.Parent = Frame
+            blur.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+            blur.BackgroundTransparency = 1.000
+            blur.BorderColor3 = Color3.fromRGB(0, 0, 0)
+            blur.BorderSizePixel = 0
+            blur.Position = UDim2.new(0.03125, 0, 0.13333334, 0)
+            blur.Size = UDim2.new(0, 240, 0, 33)
+            
+            Frame_2.Parent = ScreenGui2
+            Frame_2.BackgroundColor3 = Color3.fromRGB(22, 22, 22)
+            Frame_2.BackgroundTransparency = 0.200
+            Frame_2.Position = UDim2.new(0.00792682916, 0, 0.37, 0)
+            Frame_2.Size = UDim2.new(0, 256, 0, 132)
+            
+            UICorner_2.Parent = Frame_2
+            
+            TextLabel_2.Parent = Frame_2
+            TextLabel_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+            TextLabel_2.BackgroundTransparency = 1.000
+            TextLabel_2.Position = UDim2.new(0.0625, 0, 0.121802919, 0)
+            TextLabel_2.Size = UDim2.new(0, 186, 0, 13)
+            TextLabel_2.Font = Enum.Font.GothamBlack
+            TextLabel_2.Text = "SESSION INFORMATION"
+            TextLabel_2.TextColor3 = Color3.fromRGB(94, 94, 94)
+            TextLabel_2.TextScaled = true
+            TextLabel_2.TextSize = 14.000
+            TextLabel_2.TextWrapped = true
+            TextLabel_2.TextXAlignment = Enum.TextXAlignment.Left
+            
+            TextLabel_3.Parent = Frame_2
+            TextLabel_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+            TextLabel_3.BackgroundTransparency = 1.000
+            TextLabel_3.Position = UDim2.new(0.0625, 0, 0.329350114, 0)
+            TextLabel_3.Size = UDim2.new(0, 186, 0, 19)
+            TextLabel_3.Font = Enum.Font.GothamBlack
+            TextLabel_3.Text = game:GetService("Players").LocalPlayer.PlayerGui.TopBarAppGui.TopBarApp["2"]["5"].ContentText
+            TextLabel_3.TextColor3 = Color3.fromRGB(255, 255, 255)
+            TextLabel_3.TextScaled = true
+            TextLabel_3.TextSize = 14.000
+            TextLabel_3.TextWrapped = true
+            TextLabel_3.TextXAlignment = Enum.TextXAlignment.Left
+            
+            TextLabel_4.Parent = Frame_2
+            TextLabel_4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+            TextLabel_4.BackgroundTransparency = 1.000
+            TextLabel_4.Position = UDim2.new(0.111000001, 0, 0.470999986, 0)
+            TextLabel_4.Size = UDim2.new(0, 186, 0, 12)
+            TextLabel_4.Font = Enum.Font.GothamMedium
+            TextLabel_4.Text = "PLAYERS KILLED"
+            TextLab 
+							highlight.FillColor = Color3.fromHSV(viewmodelchamsfillcolor.Hue,viewmodelchamsfillcolor.Sat,viewmodelchamsfillcolor.Val)
+							highlight.FillTransparency = viewmodelchamsfilltransparency.Value
+							highlight.Name = "ItemOutline"
+							highlight.OutlineColor = Color3.fromHSV(viewmodelchamsoutlinecolor.Hue,viewmodelchamsoutlinecolor.Sat,viewmodelchamsoutlinecolor.Val)
+							highlight.OutlineTransparency = viewmodelchamsoutlinetransparency.Value
+							highlight.Adornee = v2
+						end
 					end
 				end
-		else
-			game.CoreGui["MatchA_StateB"].Enabled = false
+				hihi = workspace.Camera:WaitForChild("Viewmodel").ChildAdded:Connect(function(child)
+					for i,v in pairs(game.ReplicatedStorage.Items:GetDescendants()) do
+						if v.Name == child.Name then
+							local highlight = Instance.new("Highlight")
+							highlight.Parent = child
+							highlight.DepthMode = "Occluded"
+							highlight.Enabled = true
+							highlight.FillColor = Color3.fromHSV(viewmodelchamsfillcolor.Hue,viewmodelchamsfillcolor.Sat,viewmodelchamsfillcolor.Val)
+							highlight.FillTransparency = viewmodelchamsfilltransparency.Value
+							highlight.Name = "ItemOutline"
+							highlight.OutlineColor = Color3.fromHSV(viewmodelchamsoutlinecolor.Hue,viewmodelchamsoutlinecolor.Sat,viewmodelchamsoutlinecolor.Val)
+							highlight.OutlineTransparency = viewmodelchamsoutlinetransparency.Value
+							highlight.Adornee = child
+						end
+					end
+				end)
+			else
+				if hihi then hihi:Disconnect() end
+				for i,v in pairs(workspace.Camera:WaitForChild("Viewmodel"):GetDescendants()) do
+					if v:IsA("Highlight") then
+						v:Destroy()
+					end
+				end
+			end
 		end
-	end
-})
-
+	})
 do
 local tiered = {}
 local nexttier = {}
