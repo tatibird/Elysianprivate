@@ -311,8 +311,8 @@ GuiLibrary.MakeButton({
     end
 })
 
-local stats = LocalPlayer.leaderstats
-local StatsUpdateDelay = {Value = 0.5}
+local fod
+local ScreenGui2
 GuiLibrary.MakeButton({
 	["Name"] = "Stats Info",
 	["Window"] = "Visuals",
