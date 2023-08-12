@@ -49,7 +49,7 @@ local function getEquipped()
 end
 
 local Distance = {Value = 15}
-local AttackSpeed = {Value = 18}
+local AttackSpeed = {Value = 1}
 GuiLibrary.MakeButton({
 	["Name"] = "KillAura",
 	["Window"] = "Combat",
