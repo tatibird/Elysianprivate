@@ -519,3 +519,19 @@ GuiLibrary.MakeButton({
     end
 })
 end
+
+GuiLibrary.MakeButton({
+	["Name"] = "Nofall",
+	["Window"] = "Utitlity",
+	["Function"] = function(v)
+	if entity.isAlive then
+            spawn(function()
+                repeat
+                    if v == false then return end
+                    wait(0.5)
+                    BedwarsRemotes.FallRemote:FireServer(workspace.Map.Worlds[lcmapname].Blocks,1645488277.345853)
+                until v == false
+            end)
+        end
+    end
+})
