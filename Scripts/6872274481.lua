@@ -195,11 +195,12 @@ local function flyLogic()
     if not character then
         return
     end
-    
+
+    Humanoid = character.Humanoid
     if not Humanoid or Humanoid.Health == 0 then
         return
     end
-    
+
     local HumanoidRootPart = character:FindFirstChild("HumanoidRootPart")
     if not HumanoidRootPart then
         return
