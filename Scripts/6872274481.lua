@@ -60,7 +60,7 @@ GuiLibrary.MakeButton({
                     for i,v in pairs(game.Players:GetChildren()) do
                         wait(0.01)
                         if v.Character and v.Name ~= LocalPlayer.Name and v.Character:FindFirstChild("HumanoidRootPart") then
-                            local mag = (v.Character.HumanoidRootPart.Position - Character.HumanoidRootPart.Position).Magnitude
+                            local mag = (v.Character.HumanoidRootPart.Position - LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
                             if mag <= Distance.Value and v.Team ~= LocalPlayer.Team and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health > 0 then
                                 task.wait(1/AttackSpeed.Value)
                                 --if getEquipped()["Type"] == "sword" then 
