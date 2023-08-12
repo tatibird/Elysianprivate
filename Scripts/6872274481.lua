@@ -29,7 +29,7 @@ local itemstuff = debug.getupvalue(require(ReplicatedStorage.TS.item["item-meta"
 local itemtab = debug.getupvalue(require(game:GetService("ReplicatedStorage").TS.item["item-meta"]).getItemMeta, 1)
 local CombatConstant = require(game:GetService("ReplicatedStorage").TS.combat["combat-constant"]).CombatConstant
 local ShopItems = debug.getupvalue(debug.getupvalue(require(ReplicatedStorage.TS.games.bedwars.shop["bedwars-shop"]).BedwarsShop.getShopItem, 1), 2)
-local FallRemote = ReplicatedStorage["rbxts_include"]["node_modules"]["@rbxts"].net.out["_NetManaged"].GroundHit,
+
 
 local function getEquipped()
     local typetext = ""
@@ -519,19 +519,3 @@ GuiLibrary.MakeButton({
     end
 })
 end
-
-GuiLibrary.MakeButton({
-	["Name"] = "Nofall",
-	["Window"] = "Utitlity",
-	["Function"] = function(v)
-	if entity.isAlive then
-            spawn(function()
-                repeat
-                    if v == false then return end
-                    wait(0.5)
-                    BedwarsRemotes.FallRemote:FireServer(workspace.Map.Worlds[lcmapname].Blocks,1645488277.345853)
-                until v == false
-            end)
-        end
-    end
-})
