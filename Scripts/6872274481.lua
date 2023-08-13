@@ -3,11 +3,13 @@ local entity = loadstring(game:HttpGet("https://raw.githubusercontent.com/7Grand
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
 local CoreGui = game:GetService("CoreGui")
 local Players = game.Players
 local LocalPlayer = Players.LocalPlayer
 local Character = LocalPlayer.Character
 local Humanoid = Character.Humanoid
+local HumanoidRootPart = Character.HumanoidRootPart
 
 local KnitClient = debug.getupvalue(require(LocalPlayer.PlayerScripts.TS.knit).setup, 6)
 
@@ -29,6 +31,7 @@ local itemstuff = debug.getupvalue(require(ReplicatedStorage.TS.item["item-meta"
 local itemtab = debug.getupvalue(require(game:GetService("ReplicatedStorage").TS.item["item-meta"]).getItemMeta, 1)
 local CombatConstant = require(game:GetService("ReplicatedStorage").TS.combat["combat-constant"]).CombatConstant
 local ShopItems = debug.getupvalue(debug.getupvalue(require(ReplicatedStorage.TS.games.bedwars.shop["bedwars-shop"]).BedwarsShop.getShopItem, 1), 2)
+local ScytheDash = ReplicatedStorage.rbxts_include.node_modules["@rbxts"].net.out._NetManaged.ScytheDash
 
 
 local function getEquipped()
@@ -49,7 +52,7 @@ local function getEquipped()
 end
 
 local Distance = {Value = 15}
-local AttackSpeed = {Value = 0.1}
+local AttackSpeed = {Value = 18}
 GuiLibrary.MakeButton({
 	["Name"] = "KillAura",
 	["Window"] = "Combat",
@@ -60,7 +63,7 @@ GuiLibrary.MakeButton({
                     for i,v in pairs(game.Players:GetChildren()) do
                         wait(0.01)
                         if v.Character and v.Name ~= LocalPlayer.Name and v.Character:FindFirstChild("HumanoidRootPart") then
-                            local mag = (v.Character.HumanoidRootPart.Position - LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+                            local mag = (v.Character.HumanoidRootPart.Position - Character.HumanoidRootPart.Position).Magnitude
                             if mag <= Distance.Value and v.Team ~= LocalPlayer.Team and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health > 0 then
                                 task.wait(1/AttackSpeed.Value)
                                 --if getEquipped()["Type"] == "sword" then 
@@ -195,12 +198,11 @@ local function flyLogic()
     if not character then
         return
     end
-
-    Humanoid = character.Humanoid
+    
     if not Humanoid or Humanoid.Health == 0 then
         return
     end
-
+    
     local HumanoidRootPart = character:FindFirstChild("HumanoidRootPart")
     if not HumanoidRootPart then
         return
@@ -311,6 +313,67 @@ GuiLibrary.MakeButton({
 
     end
 })
+
+do
+local tiered = {}
+local nexttier = {}
+
+for i,v in pairs(ShopItems) do
+	if type(v) == "table" then 
+		if v.tiered then
+			tiered[v.itemType] = v.tiered
+		end
+		if v.nextTier then
+			nexttier[v.itemType] = v.nextTier
+		end
+	end
+end
+
+GuiLibrary.MakeButton({
+    ["Name"] = "ShopTierBypass",
+    ["Window"] = "Utility",
+    ["Function"] = function(v) 
+        if v then
+		for i,v in pairs(ShopItems) do
+			if type(v) == "table" then 
+				v.tiered = nil
+				v.nextTier = nil
+			end
+		end
+	else
+	for i,v in pairs(ShopItems) do
+		if type(v) == "table" then 
+			if tiered[v.itemType] then
+				v.tiered = tiered[v.itemType]
+			end
+			if nexttier[v.itemType] then
+				v.nextTier = nexttier[v.itemType]
+			end
+		end
+	end
+ end
+
+    end
+})
+end
+
+GuiLibrary.MakeButton({
+	["Name"] = "ScytheDisabler",
+	["Window"] = "Visuals",
+	["Function"] = function()
+         RunService.RenderStepped:Connect(function()
+
+		  local args = {
+		      [1] = {
+		          ["direction"] = HumanoidRootPart.CFrame.LookVector
+		      }
+		  }
+
+         ScytheDash:FireServer(unpack(args))
+		end)
+	end
+})
+
 
 local fod
 local ScreenGui2
@@ -442,16 +505,16 @@ GuiLibrary.MakeButton({
             TextLabel_4.Size = UDim2.new(0, 186, 0, 12)
             TextLabel_4.Font = Enum.Font.GothamMedium
             TextLabel_4.Text = "PLAYERS KILLED"
-           --TextLab 
+            TextLab 
 							highlight.FillColor = Color3.fromHSV(viewmodelchamsfillcolor.Hue,viewmodelchamsfillcolor.Sat,viewmodelchamsfillcolor.Val)
 							highlight.FillTransparency = viewmodelchamsfilltransparency.Value
 							highlight.Name = "ItemOutline"
 							highlight.OutlineColor = Color3.fromHSV(viewmodelchamsoutlinecolor.Hue,viewmodelchamsoutlinecolor.Sat,viewmodelchamsoutlinecolor.Val)
 							highlight.OutlineTransparency = viewmodelchamsoutlinetransparency.Value
 							highlight.Adornee = v2
-						--end
-					--end
-				--end
+						end
+					end
+				end
 				hihi = workspace.Camera:WaitForChild("Viewmodel").ChildAdded:Connect(function(child)
 					for i,v in pairs(game.ReplicatedStorage.Items:GetDescendants()) do
 						if v.Name == child.Name then
@@ -478,45 +541,3 @@ GuiLibrary.MakeButton({
 			end
 		end
 	})
-do
-local tiered = {}
-local nexttier = {}
-
-for i,v in pairs(ShopItems) do
-	if type(v) == "table" then 
-		if v.tiered then
-			tiered[v.itemType] = v.tiered
-		end
-		if v.nextTier then
-			nexttier[v.itemType] = v.nextTier
-		end
-	end
-end
-
-GuiLibrary.MakeButton({
-    ["Name"] = "ShopTierBypass",
-    ["Window"] = "Utility",
-    ["Function"] = function(v) 
-        if v then
-		for i,v in pairs(ShopItems) do
-			if type(v) == "table" then 
-				v.tiered = nil
-				v.nextTier = nil
-			end
-		end
-	else
-	for i,v in pairs(ShopItems) do
-		if type(v) == "table" then 
-			if tiered[v.itemType] then
-				v.tiered = tiered[v.itemType]
-			end
-			if nexttier[v.itemType] then
-				v.nextTier = nexttier[v.itemType]
-			end
-		end
-	end
- end
-
-    end
-})
-end
