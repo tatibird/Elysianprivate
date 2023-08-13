@@ -3,6 +3,7 @@ local GuiLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/ta
 local LocalPlayer = game.Players.LocalPlayer
 local Character = LocalPlayer.Character
 local Humanoid = Character.Humanoid
+local HumanoidRootPart = Character.HumanoidRottPart
 
 local Speedeb = {Value = 23}
 GuiLibrary.MakeButton({
