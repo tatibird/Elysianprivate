@@ -32,6 +32,7 @@ local itemtab = debug.getupvalue(require(game:GetService("ReplicatedStorage").TS
 local CombatConstant = require(game:GetService("ReplicatedStorage").TS.combat["combat-constant"]).CombatConstant
 local ShopItems = debug.getupvalue(debug.getupvalue(require(ReplicatedStorage.TS.games.bedwars.shop["bedwars-shop"]).BedwarsShop.getShopItem, 1), 2)
 local ScytheDash = ReplicatedStorage.rbxts_include.node_modules["@rbxts"].net.out._NetManaged.ScytheDash
+local FallRemote = ReplicatedStorage.rbxts_include.node_modules["@rbxts"].net.out._NetManaged.GroundHit
 
 
 local function getEquipped()
@@ -374,4 +375,17 @@ GuiLibrary.MakeButton({
 	end
 })
 
+GuiLibrary.MakeButton({
+	["Name"] = "NoFall",
+	["Window"] = "Utility",
+	["Function"] = function(v)
+        if v then
+		task.spawn(function()
+			repeat
+				task.wait()
+				FallRemote:FireServer()
+			until (not v)
+		end)
+	end
+})
 
