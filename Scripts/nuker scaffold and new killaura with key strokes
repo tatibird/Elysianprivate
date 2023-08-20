@@ -480,3 +480,67 @@ GuiLibrary.MakeButton({
                     end
                 end,
             })
+
+
+
+			    runFunction(function()
+        local params = RaycastParams.new()
+        params.IgnoreWater = true
+        function BreakFunction(part)
+          local raycastResult = game:GetService("Workspace"):Raycast(part.Position + Vector3.new(0,24,0),Vector3.new(0,-27,0),params)
+          if raycastResult then
+            local targetblock = raycastResult.Instance
+            for i,v in pairs(targetblock:GetChildren()) do
+              if v:IsA("Texture") then
+                v:Destroy()
+              end
+            end
+            game:GetService("ReplicatedStorage"):WaitForChild("rbxts_include"):WaitForChild("node_modules"):WaitForChild("@easy-games"):WaitForChild("block-engine"):WaitForChild("node_modules"):WaitForChild("@rbxts"):WaitForChild("net"):WaitForChild("out"):WaitForChild("_NetManaged"):WaitForChild("DamageBlock"):InvokeServer({
+              ["blockRef"] = {
+                ["blockPosition"] = Vector3.new(math.round(targetblock.Position.X/3),math.round(targetblock.Position.Y/3),math.round(targetblock.Position.Z/3))
+              },
+              ["hitPosition"] = Vector3.new(math.round(targetblock.Position.X/3),math.round(targetblock.Position.Y/3),math.round(targetblock.Position.Z/3)),
+              ["hitNormal"] = Vector3.new(math.round(targetblock.Position.X/3),math.round(targetblock.Position.Y/3),math.round(targetblock.Position.Z/3))
+            })
+          end
+        end
+        function GetBeds()
+          local beds = {}
+          for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
+            if string.lower(v.Name) == "bed" and v:FindFirstChild("Covers") ~= nil and v:FindFirstChild("Covers").BrickColor ~= lplr.Team.TeamColor then
+              table.insert(beds,v)
+            end
+          end
+          return beds
+        end
+        local BreakerRange = {Value = 30}
+        local Breaker = {Enabled = false}
+GuiLibrary.MakeButton({
+	["Name"] = "Nuker",
+	["Window"] = "Combat",
+	["Function"] = function(callback)
+            Breaker.Enabled = callback
+            if Breaker.Enabled then
+              task.spawn(function()
+                RunLoops:BindToHeartbeat("BreakingBlock", 1, function()
+                  if not Breaker.Enabled then return end
+                  task.spawn(function()
+                    if lplr:GetAttribute("DenyBlockBreak") == true then
+                      lplr:SetAttribute("DenyBlockBreak",nil)
+                    end
+                  end)
+                  if isAlive(plr) then
+                    local beds = GetBeds()
+                    for i,v in pairs(beds) do
+                      local mag = (v.Position - lplr.Character.PrimaryPart.Position).Magnitude
+                      if mag < BreakerRange.Value then
+                        BreakFunction(v)
+                      end
+                    end
+                  end
+                end)
+              end)
+            end
+          end
+        })
+      end)
