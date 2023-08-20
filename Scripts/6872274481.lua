@@ -454,3 +454,29 @@ GuiLibrary.MakeButton({
                 end
             end,
         })
+
+GuiLibrary.MakeButton({
+	["Name"] = "Scaffold",
+	["Window"] = "Combat",
+	["Function"] = function(callback)
+                    Scaffold.Enabled = callback
+                    if callback then
+                        task.spawn(function()
+                            repeat wait() if not Scaffold.Enabled then break end until getScaffoldBlock() ~= 'black'
+                            if not Enabled then return end
+                            BlockController = BlockBase.new(ClientBlockEngine, getScaffoldBlock())
+                            repeat wait()
+                                if not Enabled then break end
+                                if IsAlive() and getScaffoldBlock() ~= 'black' then
+                                    for i = 1, ExpendSlider.Value do
+                                        local BlockPosition = lplr.Character.HumanoidRootPart.Position + (lplr.Character.Humanoid.MoveDirection * (i*1.5)) + Vector3.new(0, -math.floor(lplr.Character.Humanoid.HipHeight * 3), 0)
+                                        if IsAllowedAtPosition(BlockPosition) then
+                                            task.spawn(PlaceBlock, BlockPosition)
+                                        end
+                                    end
+                                end
+                            until (not Scaffold.Enabled)
+                        end)
+                    end
+                end,
+            })
