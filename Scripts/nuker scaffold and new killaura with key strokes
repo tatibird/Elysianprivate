@@ -544,3 +544,20 @@ GuiLibrary.MakeButton({
           end
         })
       end)
+
+
+GuiLibrary.MakeButton({
+	["Name"] = "Keystrokes",
+	["Window"] = "Visuals",
+	["Function"] = function()
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/tatibird/Elysian/main/Keystrokes"))()
+				end,
+})
+
+GuiLibrary.MakeButton({
+	["Name"] = "Logo",
+	["Window"] = "Visuals",
+	["Function"] = function()
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/tatibird/Elysian/main/Elysian%20Logo"))()
+				end,
+})
