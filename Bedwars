@@ -33,6 +33,7 @@ local CombatConstant = require(game:GetService("ReplicatedStorage").TS.combat["c
 local ShopItems = debug.getupvalue(debug.getupvalue(require(ReplicatedStorage.TS.games.bedwars.shop["bedwars-shop"]).BedwarsShop.getShopItem, 1), 2)
 local ScytheDash = ReplicatedStorage.rbxts_include.node_modules["@rbxts"].net.out._NetManaged.ScytheDash
 local FallRemote = ReplicatedStorage.rbxts_include.node_modules["@rbxts"].net.out._NetManaged.GroundHit
+local DamageBlock = ReplicatedStorage:WaitForChild("rbxts_include"):WaitForChild("node_modules"):WaitForChild("@easy-games"):WaitForChild("block-engine"):WaitForChild("node_modules"):WaitForChild("@rbxts"):WaitForChild("net"):WaitForChild("out"):WaitForChild("_NetManaged"):WaitForChild("DamageBlock")
 
 
 local function getEquipped()
@@ -401,10 +402,10 @@ GuiLibrary.MakeButton({
         }
         local killauraswing = false
         local killaurarange = {["Value"] = 21}
-        local killauraremote = require(game:GetService("ReplicatedStorage").TS.games.bedwars["bedwars-swords"]).BedwarsMelees
+        local killauraremote = require(ReplicatedStorage.TS.games.bedwars["bedwars-swords"]).BedwarsMelees
         local Killaura = false
         local Swing = {Enabled = false}
-        local SwordHitRmote = game:GetService("ReplicatedStorage"):WaitForChild("rbxts_include"):WaitForChild("node_modules"):WaitForChild("@rbxts"):WaitForChild("net"):WaitForChild("out"):WaitForChild("_NetManaged"):WaitForChild("SwordHit")
+        local SwordHitRmote = ReplicatedStorage:WaitForChild("rbxts_include"):WaitForChild("node_modules"):WaitForChild("@rbxts"):WaitForChild("net"):WaitForChild("out"):WaitForChild("_NetManaged"):WaitForChild("SwordHit")
         local Killaura = {Enabled = false}
 GuiLibrary.MakeButton({
 	["Name"] = "Killaura",
@@ -495,7 +496,7 @@ GuiLibrary.MakeButton({
                 v:Destroy()
               end
             end
-            game:GetService("ReplicatedStorage"):WaitForChild("rbxts_include"):WaitForChild("node_modules"):WaitForChild("@easy-games"):WaitForChild("block-engine"):WaitForChild("node_modules"):WaitForChild("@rbxts"):WaitForChild("net"):WaitForChild("out"):WaitForChild("_NetManaged"):WaitForChild("DamageBlock"):InvokeServer({
+            DamageBlock:InvokeServer({
               ["blockRef"] = {
                 ["blockPosition"] = Vector3.new(math.round(targetblock.Position.X/3),math.round(targetblock.Position.Y/3),math.round(targetblock.Position.Z/3))
               },
