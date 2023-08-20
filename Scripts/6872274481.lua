@@ -55,7 +55,7 @@ end
 local Distance = {Value = 15}
 local AttackSpeed = {Value = 18}
 GuiLibrary.MakeButton({
-	["Name"] = "KillAura",
+	["Name"] = "(broken)KillAura",
 	["Window"] = "Combat",
 	["Function"] = function(v)
          if v then
@@ -388,7 +388,9 @@ GuiLibrary.MakeButton({
 		end)
 	end
 })
-	
+	    local scythedo = false
+    runFunction(function()
+        local anims = {
         ["ExhibitionOld"] = {
                 {CFrame = CFrame.new(0.69, -0.7, 0.6) * CFrame.Angles(math.rad(-30), math.rad(50), math.rad(-90)), Time = 0.15},
                 {CFrame = CFrame.new(0.69, -0.7, 0.6) * CFrame.Angles(math.rad(-30), math.rad(50), math.rad(-90)), Time = 0.05},
@@ -405,6 +407,50 @@ GuiLibrary.MakeButton({
         local SwordHitRmote = game:GetService("ReplicatedStorage"):WaitForChild("rbxts_include"):WaitForChild("node_modules"):WaitForChild("@rbxts"):WaitForChild("net"):WaitForChild("out"):WaitForChild("_NetManaged"):WaitForChild("SwordHit")
         local Killaura = {Enabled = false}
 GuiLibrary.MakeButton({
-	["Name"] = "KillAura",
+	["Name"] = "Killaura",
 	["Window"] = "Combat",
 	["Function"] = function(callback)
+                Killaura.Enabled = callback
+                if callback then
+                    local sword = getCurrentSword()
+                    local function attackEntity(plr)
+                        local root = plr.Character.HumanoidRootPart
+                        if not root then
+                            return nil
+                        end
+                        
+                        local selfrootpos = lplr.Character.HumanoidRootPart.Position
+                        local selfpos = selfrootpos + (killaurarange["Value"] > 14 and (selfrootpos - root.Position).magnitude > 14 and (CFrame.lookAt(selfrootpos, root.Position).lookVector * 4) or Vector3.zero)
+                        SwordHitRmote:FireServer({
+                            ["chargedAttack"] = {
+                                ["chargeRatio"] = 0.5
+                            },
+                            ["entityInstance"] = plr.Character,
+                            ["validate"] = {
+                                ["raycast"] = {
+                                    ["cameraPosition"] = hashvec(cam.CFrame.Position),
+                                    ["cursorDirection"] = hashvec(Ray.new(cam.CFrame.Position, root.CFrame.Position).Unit.Direction)
+                                },
+                                ["targetPosition"] = hashvec(root.CFrame.Position),
+                                ["selfPosition"] = hashvec(selfpos)
+                            },
+                            ["weapon"] = sword.tool,
+                        })
+                        if killauraswing == true then
+                            playAnimation("rbxassetid://4947108314")
+                        end
+                    end
+                    task.spawn(function()
+                        RunLoops:BindToHeartbeat("Killaura", 1, function()
+                            local plrs = GetAllNearestHumanoidToPosition(killaurarange["Value"] - 0.0001, 1)
+                            for i,plr in pairs(plrs) do
+                                switchItem(sword.tool)
+                                task.spawn(attackEntity, plr)
+                            end
+                        end)
+                    end)
+                else
+                    RunLoops:UnbindFromHeartbeat("Killaura")
+                end
+            end,
+        })
