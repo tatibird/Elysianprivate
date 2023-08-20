@@ -11,7 +11,7 @@ GuiLibrary.MakeButton({
 	["Window"] = "Movement",
 	["Function"] = function(v)
 		if v == true then
-             Humanoid.WalkSpeed = Speedeb["Value"]
+             Humanoid.WalkSpeed = Speedeb.Value
         else
              Humanoid.WalkSpeed = 16
         end
@@ -30,14 +30,14 @@ GuiLibrary.MakeButton({
                 task.wait()
                 workspace.Gravity = 5
                 spawn(function()
-                    for i = 1, highjumpforce["Value"] do
+                    for i = 1, highjumpforce.Value do
                         wait()
                         if (not highjumpval) then return end
                         Humanoid:ChangeState("Jumping")
                     end
                 end)
                 spawn(function()
-                    for i = 1, highjumpforce["Value"] / 28 do
+                    for i = 1, highjumpforce.Value / 28 do
                         task.wait(0.1)
                         Humanoid:ChangeState(Enum.HumanoidStateType.Freefall)
                         task.wait(0.1)
