@@ -389,3 +389,7 @@ GuiLibrary.MakeButton({
 	end
 })
 
+GuiLibrary.MakeButton({
+	["Name"] = "KillAura",
+	["Window"] = "Blatant",
+	["Function"] = function(callback)
