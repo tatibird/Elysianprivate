@@ -3,7 +3,8 @@ local GuiLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/ta
 local LocalPlayer = game.Players.LocalPlayer
 local Character = LocalPlayer.Character
 local Humanoid = Character.Humanoid
-local HumanoidRootPart = Character.HumanoidRottPart
+local HumanoidRootPart = Character.HumanoidRootPart
+local UserInputService = game:GetService("UserInputService")
 
 local Speedeb = {Value = 23}
 GuiLibrary.MakeButton({
@@ -80,7 +81,6 @@ local function flyLogic()
     workspace.Gravity = flygravityb.Value
     Humanoid.WalkSpeed = flyspeedb.Value
     
-    local UserInputService = game:GetService("UserInputService")
     local SpaceHeld = UserInputService:IsKeyDown(Enum.KeyCode.Space)
     local ShiftHeld = UserInputService:IsKeyDown(Enum.KeyCode.LeftShift)
     
