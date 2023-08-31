@@ -36,6 +36,10 @@ local FallRemote = ReplicatedStorage.rbxts_include.node_modules["@rbxts"].net.ou
 local DamageBlock = ReplicatedStorage:WaitForChild("rbxts_include"):WaitForChild("node_modules"):WaitForChild("@easy-games"):WaitForChild("block-engine"):WaitForChild("node_modules"):WaitForChild("@rbxts"):WaitForChild("net"):WaitForChild("out"):WaitForChild("_NetManaged"):WaitForChild("DamageBlock")
 
 
+local runFunction = function(func) 
+	func() 
+end
+
 local function getEquipped()
     local typetext = ""
     local obj = (entity.isAlive and LocalPlayer.Character:FindFirstChild("HandInvItem") and LocalPlayer.Character.HandInvItem.Value or nil)
@@ -383,32 +387,59 @@ GuiLibrary.MakeButton({
 	["Window"] = "Utility",
 	["Function"] = function(v)
         if v then
-		task.spawn(function()
-			repeat
-				task.wait()
-				FallRemote:FireServer()
-			until (not v)
-		end)
+			task.spawn(function()
+				repeat
+					task.wait()
+					FallRemote:FireServer()
+				until (not v)
+			end)
+		end
 	end
 })
-	    local scythedo = false
-    runFunction(function()
-        local anims = {
-        ["ExhibitionOld"] = {
-                {CFrame = CFrame.new(0.69, -0.7, 0.6) * CFrame.Angles(math.rad(-30), math.rad(50), math.rad(-90)), Time = 0.15},
-                {CFrame = CFrame.new(0.69, -0.7, 0.6) * CFrame.Angles(math.rad(-30), math.rad(50), math.rad(-90)), Time = 0.05},
-                {CFrame = CFrame.new(0.7, -0.71, 0.59) * CFrame.Angles(math.rad(-84), math.rad(50), math.rad(-38)), Time = 0.1},
-                {CFrame = CFrame.new(0.7, -0.71, 0.59) * CFrame.Angles(math.rad(-84), math.rad(50), math.rad(-38)), Time = 0.05},
-                {CFrame = CFrame.new(0.63, -0.1, 1.37) * CFrame.Angles(math.rad(-84), math.rad(50), math.rad(-38)), Time = 0.15}
-            }
-        }
-        local killauraswing = false
-        local killaurarange = {["Value"] = 21}
-        local killauraremote = require(ReplicatedStorage.TS.games.bedwars["bedwars-swords"]).BedwarsMelees
-        local Killaura = false
-        local Swing = {Enabled = false}
-        local SwordHitRmote = ReplicatedStorage:WaitForChild("rbxts_include"):WaitForChild("node_modules"):WaitForChild("@rbxts"):WaitForChild("net"):WaitForChild("out"):WaitForChild("_NetManaged"):WaitForChild("SwordHit")
-        local Killaura = {Enabled = false}
+
+local scythedo = false
+runFunction(function()
+	local anims = {
+	["ExhibitionOld"] = {
+	        {CFrame = CFrame.new(0.69, -0.7, 0.6) * CFrame.Angles(math.rad(-30), math.rad(50), math.rad(-90)), Time = 0.15},
+	        {CFrame = CFrame.new(0.69, -0.7, 0.6) * CFrame.Angles(math.rad(-30), math.rad(50), math.rad(-90)), Time = 0.05},
+	        {CFrame = CFrame.new(0.7, -0.71, 0.59) * CFrame.Angles(math.rad(-84), math.rad(50), math.rad(-38)), Time = 0.1},
+	        {CFrame = CFrame.new(0.7, -0.71, 0.59) * CFrame.Angles(math.rad(-84), math.rad(50), math.rad(-38)), Time = 0.05},
+	        {CFrame = CFrame.new(0.63, -0.1, 1.37) * CFrame.Angles(math.rad(-84), math.rad(50), math.rad(-38)), Time = 0.15}
+	    }
+	}
+	function getinv(plr)
+		local plr = plr or LocalPlayer
+		local thingy, thingytwo = pcall(function() return InventoryUtil.getInventory(plr) end)
+		return (thingy and thingytwo or {
+		    items = {},
+		    armor = {},
+		    hand = nil
+		})
+	end
+	function getCurrentSword()
+		local sd
+		local higherdamage
+		local swordslots
+		local swords = getinv().items
+		for i, v in pairs(swords) do
+		    if v.itemType:lower():find("sword") or v.itemType:lower():find("blade") then
+		        if higherdamage == nil or itemstuff[v.itemType].sword.damage > higherdamage then
+		            sd = v
+		            higherdamage = itemstuff[v.itemType].sword.damage
+		            swordslots = i
+		        end
+		    end
+		end
+    return sd, swordslots
+end
+	local killauraswing = false
+	local killaurarange = {["Value"] = 21}
+	local killauraremote = require(ReplicatedStorage.TS.games.bedwars["bedwars-swords"]).BedwarsMelees
+	local Killaura = false
+	local Swing = {Enabled = false}
+	local SwordHitRmote = ReplicatedStorage:WaitForChild("rbxts_include"):WaitForChild("node_modules"):WaitForChild("@rbxts"):WaitForChild("net"):WaitForChild("out"):WaitForChild("_NetManaged"):WaitForChild("SwordHit")
+	local Killaura = {Enabled = false}
 GuiLibrary.MakeButton({
 	["Name"] = "Killaura",
 	["Window"] = "Combat",
@@ -453,40 +484,40 @@ GuiLibrary.MakeButton({
                         end)
                     end)
                 else
-                    RunLoops:UnbindFromHeartbeat("Killaura")
+                    if RunLoops:UnbindFromHeartbeat("Killaura") then RunLoops:UnbindFromHeartbeat("Killaura") end
                 end
             end,
         })
-
+end)
 GuiLibrary.MakeButton({
 	["Name"] = "Scaffold",
 	["Window"] = "Combat",
 	["Function"] = function(callback)
-                    Scaffold.Enabled = callback
-                    if callback then
-                        task.spawn(function()
-                            repeat wait() if not Scaffold.Enabled then break end until getScaffoldBlock() ~= 'black'
-                            if not Enabled then return end
-                            BlockController = BlockBase.new(ClientBlockEngine, getScaffoldBlock())
-                            repeat wait()
-                                if not Enabled then break end
-                                if IsAlive() and getScaffoldBlock() ~= 'black' then
-                                    for i = 1, ExpendSlider.Value do
-                                        local BlockPosition = lplr.Character.HumanoidRootPart.Position + (lplr.Character.Humanoid.MoveDirection * (i*1.5)) + Vector3.new(0, -math.floor(lplr.Character.Humanoid.HipHeight * 3), 0)
-                                        if IsAllowedAtPosition(BlockPosition) then
-                                            task.spawn(PlaceBlock, BlockPosition)
-                                        end
-                                    end
-                                end
-                            until (not Scaffold.Enabled)
-                        end)
+        Scaffold.Enabled = callback
+        if callback then
+            task.spawn(function()
+                repeat wait() if not Scaffold.Enabled then break end until getScaffoldBlock() ~= 'black'
+                if not Enabled then return end
+                BlockController = BlockBase.new(ClientBlockEngine, getScaffoldBlock())
+                repeat wait()
+                    if not Enabled then break end
+                    if IsAlive() and getScaffoldBlock() ~= 'black' then
+                        for i = 1, ExpendSlider.Value do
+                            local BlockPosition = lplr.Character.HumanoidRootPart.Position + (lplr.Character.Humanoid.MoveDirection * (i*1.5)) + Vector3.new(0, -math.floor(lplr.Character.Humanoid.HipHeight * 3), 0)
+                            if IsAllowedAtPosition(BlockPosition) then
+                                task.spawn(PlaceBlock, BlockPosition)
+                            end
+                        end
                     end
-                end,
-            })
+                until (not Scaffold.Enabled)
+            end)
+        end
+    end,
+})
 
 
 
-			    runFunction(function()
+runFunction(function()
         local params = RaycastParams.new()
         params.IgnoreWater = true
         function BreakFunction(part)
@@ -522,45 +553,45 @@ GuiLibrary.MakeButton({
 	["Name"] = "Nuker",
 	["Window"] = "Combat",
 	["Function"] = function(callback)
-            Breaker.Enabled = callback
-            if Breaker.Enabled then
+        Breaker.Enabled = callback
+        if Breaker.Enabled then
+          task.spawn(function()
+            RunLoops:BindToHeartbeat("BreakingBlock", 1, function()
+              if not Breaker.Enabled then return end
               task.spawn(function()
-                RunLoops:BindToHeartbeat("BreakingBlock", 1, function()
-                  if not Breaker.Enabled then return end
-                  task.spawn(function()
-                    if lplr:GetAttribute("DenyBlockBreak") == true then
-                      lplr:SetAttribute("DenyBlockBreak",nil)
-                    end
-                  end)
-                  if isAlive(plr) then
-                    local beds = GetBeds()
-                    for i,v in pairs(beds) do
-                      local mag = (v.Position - lplr.Character.PrimaryPart.Position).Magnitude
-                      if mag < BreakerRange.Value then
-                        BreakFunction(v)
-                      end
-                    end
-                  end
-                end)
+                if lplr:GetAttribute("DenyBlockBreak") == true then
+                  lplr:SetAttribute("DenyBlockBreak",nil)
+                end
               end)
-            end
-          end
-        })
-      end)
+              if isAlive(plr) then
+                local beds = GetBeds()
+                for i,v in pairs(beds) do
+                  local mag = (v.Position - lplr.Character.PrimaryPart.Position).Magnitude
+                  if mag < BreakerRange.Value then
+                    BreakFunction(v)
+                  end
+                end
+              end
+            end)
+          end)
+        end
+      end
+})
+end)
 
 
 GuiLibrary.MakeButton({
 	["Name"] = "Keystrokes",
 	["Window"] = "Visuals",
 	["Function"] = function()
-			loadstring(game:HttpGet("https://raw.githubusercontent.com/tatibird/Elysian/main/Keystrokes"))()
-				end,
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/tatibird/Elysian/main/Keystrokes"))()
+	end,
 })
 
 GuiLibrary.MakeButton({
 	["Name"] = "Logo",
 	["Window"] = "Visuals",
 	["Function"] = function()
-			loadstring(game:HttpGet("https://raw.githubusercontent.com/tatibird/Elysian/main/Elysian%20Logo"))()
-				end,
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/tatibird/Elysian/main/Elysian%20Logo"))()
+	end,
 })
