@@ -53,6 +53,7 @@ local function getEquipped()
     return {["Object"] = obj, ["Type"] = typetext}
 end
 
+--[[
 local Distance = {Value = 15}
 local AttackSpeed = {Value = 18}
 GuiLibrary.MakeButton({
@@ -79,6 +80,7 @@ GuiLibrary.MakeButton({
         end
 	end,
 })
+]]
 
 GuiLibrary.MakeButton({
 	["Name"] = "Texture Pack",
